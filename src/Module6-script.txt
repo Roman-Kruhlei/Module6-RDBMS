@@ -1,56 +1,45 @@
-create table Client(
-	client_id integer not null,
+create table client(
+    client_id integer not null,
     name varchar(20),
     address varchar(30),
     num int,
-    rep_id integer not null,
     primary key (client_id));
     
-create table Object(
-	object_id integer not null,
+create table object(
+    object_id integer not null,
     square integer,
     address varchar(30),
     year integer,
-    rep_id integer not null,
-    client_id integer not null,
     primary key (object_id));
-    
-create table Repayment(
-	rep_id integer not null,
-    title varchar(20),
-    time_p integer,
-    client_id integer not null,
-    object_id integer not null,
-    primary key (rep_id),
-    foreign key (client_id) references Client(client_id),
-    foreign key (object_id) references Object(object_id));
-    
-create table Company(
-	selling_id integer not null,
-    commission int,
-    object_id integer not null,
+
+create table seller(
     seller_id integer not null,
-    primary key (selling_id));
-    
-create table RelCompObj(
-	object_id integer not null,
-    selling_id integer not null,
-    primary key(object_id),
-	foreign key (selling_id) references Company(selling_id),
-    foreign key (object_id) references Object(object_id));
-    
-create table Seller(
-	seller_id integer not null,
     name varchar(20),
     email varchar(20),
     num integer,
-    selling_id integer not null,
     primary key(seller_id));
+   
+create table selling_sheme(
+    sheme_id integer not null,
+    name_sheme varchar(20),
+    years integer,
+    primary key(sheme_id));
     
-create table RelSalComp(
-	selling_id integer not null,
+create table sale(
+    sale_id integer not null,
+    commission int,
+    object_id integer not null,
     seller_id integer not null,
-    primary key(seller_id),
-	foreign key (selling_id) references Company(selling_id),
-    foreign key (seller_id) references Seller(seller_id));
+    client_id integer not null,
+    sheme_id integer not null,
+    primary key (sale_id),
+    foreign key (seller_id) references seller(seller_id), 
+    foreign key (client_id) references client(client_id),   
+    foreign key (object_id) references object(object_id),
+    foreign key (sheme_id) references selling_sheme(sheme_id));
+
+
+
     
+
+
